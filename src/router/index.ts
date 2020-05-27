@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Menu from '../components/subComponents/Menu.vue'
-import AddMenuItem from '../components/forms/AddMenuItem.vue'
-import UpdateMenuItem from '../components/forms/UpdateMenuItem.vue'
+import Menu from "../components/subComponents/Menu.vue";
+import AddMenuItem from "../components/forms/AddMenuItem.vue";
+import UpdateMenuItem from "../components/forms/UpdateMenuItem.vue";
 
 Vue.use(VueRouter);
 

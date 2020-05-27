@@ -11,8 +11,8 @@ import WaiterUI from "./components/Views/WaiterUI";
 export default {
   components: {
     // AdminUI,
-    WaiterUI,
-  },
+    WaiterUI
+  }
 };
 </script>
 

@@ -1,5 +1,5 @@
-export enum UnitType{
-    Can,
-    Glass,
-    Bottle
+export enum UnitType {
+  Can,
+  Glass,
+  Bottle
 }

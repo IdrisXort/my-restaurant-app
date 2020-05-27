@@ -16,7 +16,7 @@ import { MenuItemType } from "../../constants/MenuItemTypes";
 export default {
   name: "Menu",
   components: {
-    MenuItemList,
+    MenuItemList
   },
   computed: {
     foods() {
@@ -42,7 +42,7 @@ export default {
     },
     extras() {
       return this.foods.filter(this.getExtras);
-    },
+    }
   },
   methods: {
     getMainCourses(item) {
@@ -65,8 +65,8 @@ export default {
     },
     getStarters(item) {
       return item.Type === MenuItemType.Starter && item.IsActive;
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

@@ -1,4 +1,4 @@
-import {MenuItemInputModel} from './InputModels/MenuItemInputModel'
+import { MenuItemInputModel } from "./InputModels/MenuItemInputModel";
 export class MenuItem {
   Id: string;
   Name: string;
@@ -8,7 +8,7 @@ export class MenuItem {
   Type: string;
   IsActive: boolean;
 
-  constructor(inputModel:MenuItemInputModel) {
+  constructor(inputModel: MenuItemInputModel) {
     this.Id = inputModel.Id;
     this.Name = inputModel.Name;
     this.UnitPrice = inputModel.UnitPrice;

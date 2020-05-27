@@ -12,8 +12,8 @@ export default {
   name: "MenuItem",
   props: {
     menuItem: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   methods: {
     sendItemToGetUpdated(id) {
@@ -21,13 +21,13 @@ export default {
     },
     removeItem(id) {
       this.$store.dispatch("removeItem", id);
-    },
+    }
   },
   computed: {
     className() {
       return this.menuItem.Type;
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

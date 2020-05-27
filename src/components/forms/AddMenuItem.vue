@@ -52,7 +52,7 @@
 import {
   FoodTypes,
   MenuItemType,
-  MainCourseTypes,
+  MainCourseTypes
 } from "../../constants/MenuItemTypes";
 import { MenuItemInputModel } from "../../models/InputModels/MenuItemInputModel";
 import InputContainer from "../genericComponents/InputContainer";
@@ -61,7 +61,7 @@ import Guid from "guid";
 export default {
   name: "AddMenuItem",
   components: {
-    InputContainer,
+    InputContainer
   },
   data() {
     return {
@@ -73,10 +73,10 @@ export default {
         description: "",
         type: "",
         approximitelyCookingTime: undefined,
-        subType: undefined,
+        subType: undefined
       },
       FoodTypes,
-      MainCourseTypes,
+      MainCourseTypes
     };
   },
   mounted() {
@@ -93,14 +93,14 @@ export default {
         this.menuItem.description &&
         this.menuItem.type
       );
-    },
+    }
   },
   watch: {
     isSelectedFoodMainCourse(newVal) {
       if (!newVal) {
         this.menuItem.approximitelyCookingTime = undefined;
       }
-    },
+    }
   },
   methods: {
     addUpdateItem() {
@@ -115,9 +115,9 @@ export default {
         description: "",
         type: "",
         approximitelyCookingTime: undefined,
-        id: Guid.raw(),
+        id: Guid.raw()
       };
-    },
-  },
+    }
+  }
 };
 </script>

@@ -6,9 +6,9 @@ export default {
   name: "Table",
   props: {
     tableNumber: {
-      type: Number,
-    },
-  },
+      type: Number
+    }
+  }
 };
 </script>
 <style></style>

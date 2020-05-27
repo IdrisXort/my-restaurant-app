@@ -20,16 +20,16 @@ import MenuItem from "./MenuItem";
 export default {
   name: "MenuItemList",
   components: {
-    MenuItem,
+    MenuItem
   },
   props: {
     menuItems: {
-      type: Array,
+      type: Array
     },
     title: {
-      type: String,
-    },
-  },
+      type: String
+    }
+  }
 };
 </script>
 <style lang="scss">

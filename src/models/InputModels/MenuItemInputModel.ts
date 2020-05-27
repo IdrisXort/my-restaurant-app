@@ -17,7 +17,7 @@ export class MenuItemInputModel {
     description,
     type,
     approximitelyCookingTime,
-    subType,
+    subType
   }: {
     id: string;
     name: string;
