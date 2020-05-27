@@ -1,13 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <!-- <admin-u-i /> -->
+    <waiter-u-i />
   </div>
 </template>
 
+<script>
+// import AdminUI from "./components/Views/AdminUI";
+import WaiterUI from "./components/Views/WaiterUI";
+export default {
+  components: {
+    // AdminUI,
+    WaiterUI,
+  },
+};
+</script>
+
+<style></style>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
