@@ -1,14 +1,14 @@
 <template>
   <ul>
-      MUTFAK
+    MUTFAK
     <li>sparisi alir</li>
     <li>yemegi pisirir</li>
     <li>garsona haber ver</li>
-    <br>
+    <br />
   </ul>
 </template>
 <script>
 export default {
-  name:"KitchenUI"
+  name: "KitchenUI"
 };
 </script>

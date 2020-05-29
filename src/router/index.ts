@@ -1,8 +1,9 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Menu from '../components/subComponents/Menu.vue'
-import AddMenuItem from '../components/forms/AddMenuItem.vue'
-import UpdateMenuItem from '../components/forms/UpdateMenuItem.vue'
+import Menu from "../components/subComponents/Menu.vue";
+import AddMenuItem from "../components/forms/AddMenuItem.vue";
+import UpdateMenuItem from "../components/forms/UpdateMenuItem.vue";
+import CreateOrder from "../components/forms/CreateOrder.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes: Array<RouteConfig> = [
     path: "/update-menu-item",
     name: "UpdateMenuItem",
     component: UpdateMenuItem
+  },
+  {
+    path: "/create-order",
+    name: "CreateOrder",
+    component: CreateOrder
   }
 ];
 

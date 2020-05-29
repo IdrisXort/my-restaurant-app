@@ -41,7 +41,7 @@ import InputContainer from "../genericComponents/InputContainer";
 export default {
   name: "UpdateMenuItem",
   components: {
-    InputContainer,
+    InputContainer
   },
   data() {
     return {
@@ -52,13 +52,13 @@ export default {
         IsAvailable: true,
         Description: "",
         Type: "",
-        ApproximitelyCookingTime: undefined,
+        ApproximitelyCookingTime: undefined
       },
-      FoodTypes,
+      FoodTypes
     };
   },
   mounted() {
-    this.reset()
+    this.reset();
     this.menuItem = this.theItemToUpdate;
   },
   computed: {
@@ -78,7 +78,7 @@ export default {
         this.menuItem.Description &&
         this.menuItem.Type
       );
-    },
+    }
   },
   methods: {
     updateItem() {
@@ -94,9 +94,9 @@ export default {
         isAvailable: true,
         description: "",
         type: "",
-        approximitelyCookingTime: undefined,
+        approximitelyCookingTime: undefined
       };
-    },
-  },
+    }
+  }
 };
 </script>

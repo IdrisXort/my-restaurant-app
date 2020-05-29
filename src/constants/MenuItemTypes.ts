@@ -4,7 +4,7 @@ export const FoodTypes = [
   "Salad",
   "MainCourse",
   "Dessert",
-  "Extra",
+  "Extra"
 ];
 export const DrinkTypes = ["HotDrink", "ColdDrink"];
 
@@ -17,5 +17,6 @@ export const enum MenuItemType {
   Soup = "Soup",
   Starter = "Starter",
   Salad = "Salad",
-  Extra = "Extra",
+  Extra = "Extra"
 }
+export const TableCount = 10;

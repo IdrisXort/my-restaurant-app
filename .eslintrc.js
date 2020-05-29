@@ -24,5 +24,5 @@ module.exports = {
         "@typescript/no-var-requires": "off"
       }
     }
-]
+  ]
 };

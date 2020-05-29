@@ -1,24 +1,29 @@
 <template>
   <div>
-    <menu-item-list title="Main courses" :menuItems="mainCourses" />
-    <menu-item-list title="Soups" :menuItems="soups" />
-    <menu-item-list title="Aperitifs" :menuItems="aperitifs" />
-    <menu-item-list title="Starters" :menuItems="starters" />
-    <menu-item-list title="Salads" :menuItems="salads" />
-    <menu-item-list title="Desserts" :menuItems="desserts" />
-    <menu-item-list title="Extras" :menuItems="extras" />
+    <menu-group :menuGroupItems="mainCourses" groupTitle="mainCourses" />
+    <menu-group :menuGroupItems="soups" groupTitle="soups" />
+    <menu-group :menuGroupItems="aperitifs" groupTitle="aperitifs" />
+    <menu-group :menuGroupItems="starters" groupTitle="starters" />
+    <menu-group :menuGroupItems="salads" groupTitle="salads" />
+    <menu-group :menuGroupItems="desserts" groupTitle="desserts" />
+    <menu-group :menuGroupItems="extras" groupTitle="extras" />
   </div>
 </template>
 <script>
-import MenuItemList from "./MenuItemList";
 import { MenuItemType } from "../../constants/MenuItemTypes";
-
+import MenuGroup from "../subComponents/MenuGroup";
 export default {
-  name: "Menu",
+  name: "CreateOrder",
   components: {
-    MenuItemList
+    MenuGroup
   },
   computed: {
+    tableNumber() {
+      return this.$store.getters.currentTableNumber;
+    },
+    orders() {
+      return this.$store.getters.getOrderByTableNumber(this.tableNumber);
+    },
     foods() {
       return Object.values(this.$store.getters.foods);
     },
@@ -69,17 +74,3 @@ export default {
   }
 };
 </script>
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-</style>
