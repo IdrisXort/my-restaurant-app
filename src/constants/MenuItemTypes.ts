@@ -19,3 +19,4 @@ export const enum MenuItemType {
   Salad = "Salad",
   Extra = "Extra"
 }
+export const TableCount = 10;

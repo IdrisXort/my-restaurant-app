@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <Table
-      v-for="(table, index) in tables"
-      :tableNumber="table.Number"
-      :key="index"
-    />
+  <div class="tableContainer">
+    <Table v-for="(table, index) in tables" :table="table" :key="index" />
   </div>
 </template>
 <script>
@@ -21,4 +17,10 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+.tableContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+</style>

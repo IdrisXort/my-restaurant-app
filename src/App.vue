@@ -1,17 +1,23 @@
 <template>
   <div id="app">
-    <!-- <admin-u-i /> -->
+    <admin-u-i v-if="isAdmin" />
     <waiter-u-i />
   </div>
 </template>
 
 <script>
-// import AdminUI from "./components/Views/AdminUI";
+import AdminUI from "./components/Views/AdminUI";
 import WaiterUI from "./components/Views/WaiterUI";
 export default {
+  name: "App",
   components: {
-    // AdminUI,
+    AdminUI,
     WaiterUI
+  },
+  computed: {
+    isAdmin() {
+      return false;
+    }
   }
 };
 </script>
