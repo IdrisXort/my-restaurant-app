@@ -8,6 +8,8 @@
 <script>
 import AdminUI from "./components/Views/AdminUI";
 import WaiterUI from "./components/Views/WaiterUI";
+import { foodsRef } from "./base";
+
 export default {
   name: "App",
   components: {
@@ -18,6 +20,12 @@ export default {
     isAdmin() {
       return false;
     }
+  },
+  created() {
+    foodsRef.on("value", snap => {
+      this.$store.dispatch("setFoods", snap.val());
+    });
+    this.$store.dispatch("getTables");
   }
 };
 </script>

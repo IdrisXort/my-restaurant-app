@@ -3,7 +3,7 @@
     <button
       class="openbtn"
       :style="{
-        backgroundColor: isTableOccupied ? 'aqua' : '#111'
+        backgroundColor: isTableOccupied ? 'aqua' : '#111',
       }"
       @click="openNav"
     >
@@ -12,12 +12,12 @@
     <div
       class="sidepanel"
       :style="{
-        height: isCollapsed ? '250px' : '0px'
+        height: isCollapsed ? '250px' : '0px',
       }"
     >
       <a href="" class="closebtn">×</a>
       <a href="#" @click="setOccupied">Serve table</a>
-      <router-link to="create-order"> Orders </router-link>
+      <a style="cursor:pointer;" @click="getOrders">Orders</a>
     </div>
   </div>
 </template>
@@ -27,13 +27,13 @@ export default {
   name: "Table",
   data() {
     return {
-      isCollapsed: false
+      isCollapsed: false,
     };
   },
   props: {
     table: {
-      type: Table
-    }
+      type: Table,
+    },
   },
   computed: {
     className() {
@@ -41,7 +41,7 @@ export default {
     },
     isTableOccupied() {
       return this.table.IsOccupied;
-    }
+    },
   },
   methods: {
     setOccupied() {
@@ -49,17 +49,15 @@ export default {
     },
     openNav() {
       this.isCollapsed = !this.isCollapsed;
-      if (this.isCollapsed)
-        this.$store.dispatch("setCurrentTable", this.table.Number);
     },
     reserveTable() {
       this.$store.dispatch("reserveTable", this.table);
     },
     getOrders() {
       this.isCollapsed = false;
-      this.$router.push({ path: "create-order" });
-    }
-  }
+      this.$store.dispatch("setCurrentTable", this.table.Number);
+    },
+  },
 };
 </script>
 <style>

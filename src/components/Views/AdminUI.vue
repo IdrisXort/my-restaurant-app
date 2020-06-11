@@ -13,13 +13,7 @@
   </div>
 </template>
 <script>
-import { foodsRef } from "../../base";
 export default {
-  name: "AdminUI",
-  mounted() {
-    foodsRef.on("value", snap => {
-      this.$store.dispatch("setFoods", snap.val());
-    });
-  }
+  name: "AdminUI"
 };
 </script>

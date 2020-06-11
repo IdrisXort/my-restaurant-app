@@ -22,11 +22,6 @@ const routes: Array<RouteConfig> = [
     path: "/update-menu-item",
     name: "UpdateMenuItem",
     component: UpdateMenuItem
-  },
-  {
-    path: "/create-order",
-    name: "CreateOrder",
-    component: CreateOrder
   }
 ];
 
