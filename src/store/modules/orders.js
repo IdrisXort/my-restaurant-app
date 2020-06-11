@@ -5,7 +5,7 @@ const state = {
 };
 const mutations = {
   SET_ORDERS: (state, orderRequest) => {
-    state.orders[orderRequest.TableNumber] = orderRequest.Orders;
+    state.orders[orderRequest.tableNumber] = orderRequest.orders;
   }
 };
 const actions = {

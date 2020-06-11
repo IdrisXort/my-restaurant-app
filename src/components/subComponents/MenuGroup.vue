@@ -8,40 +8,54 @@
         :menuGroupItem="menuGroupItem"
         v-for="menuGroupItem in menuGroupItems"
         :key="menuGroupItem.Id"
-      />
+        :style="{ cursor: 'pointer' }"
+      >
+        <template slot="add">
+          <button @click="increase(menuGroupItem)">+</button>
+          <button @click="decrease(menuGroupItem)">-</button>
+        </template>
+      </menu-group-item>
     </div>
   </div>
 </template>
 <script>
 import MenuGroupItem from "./MenuGroupItem";
+import { OrderRequest } from "../../models//OrderRequest";
 export default {
   name: "MenuGroup",
   components: {
-    MenuGroupItem
+    MenuGroupItem,
   },
   data() {
     return {
-      isToggled: false
+      isToggled: false,
+      orderRequest: new OrderRequest(),
     };
   },
   props: {
     groupTitle: {
-      type: String
+      type: String,
     },
     menuGroupItems: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   computed: {
     className() {
       return this.isToggled ? "accordion active" : "accordion";
-    }
+    },
   },
   methods: {
     toggle() {
       this.isToggled = !this.isToggled;
-    }
-  }
+    },
+    increase(menuGroupItem) {
+      this.$emit("addMenuItem", menuGroupItem);
+    },
+    decrease(menuGroupItem) {
+      this.$emit("removeMenuItem", menuGroupItem);
+    },
+  },
 };
 </script>
 <style>
