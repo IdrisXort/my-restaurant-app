@@ -1,10 +1,5 @@
 <template>
-  <div
-    v-if="currentTableNumber && orderChangeIsRequested"
-    tabindex="0"
-    @keydown.esc="orderChangeIsRequested = false"
-    ref="blaa"
-  >
+  <div v-if="currentTableNumber && orderChangeIsRequested">
     <h2>Table {{ currentTableNumber }}</h2>
     <button class="closebtn" @click="orderChangeIsRequested = false">
       x
@@ -13,19 +8,19 @@
       v-for="key in menuItemTypes"
       :key="key"
       @addMenuItem="addMenuItemToOrders"
-      @removeMenuItem="removeMenuItemFromOrders"
       :menuGroupItems="grouppedFoods[key]"
       :groupTitle="key"
     />
     <template v-if="tableHasOrders">
       Earlier Orders
       <div
-        v-for="(item, index) in ordersForCurrentTable"
-        :key="item.Id + 'existing' + index"
+        v-for="(orderItem, index) in ordersForCurrentTable"
+        :key="orderItem.Order.Id + 'existing' + index"
       >
-        <span
-          >{{ item.Name }}---------------------------------{{
-            item.UnitPrice
+        <span>
+          <span v-if="orderItem.Note">***</span>
+          {{ orderItem.Order.Name }}---------------------------------{{
+            orderItem.Order.UnitPrice
           }}</span
         >
       </div>
@@ -37,18 +32,32 @@
     </template>
     <template v-if="tableHasNewOrders">
       New Orders
-      <div v-for="item in newOrders" :key="item.Id + 'new' + index">
-        <span
-          >{{ item.Name }}---------------------------------{{
-            item.UnitPrice
+      <div
+        v-for="(orderItem, index) in newOrders"
+        :key="orderItem.Order.Id + 'new' + index"
+      >
+        <span>
+          <span v-if="orderItem.Note">***</span>
+          {{ orderItem.Order.Name }}---------------------------------{{
+            orderItem.Order.UnitPrice
           }}</span
         >
-        <button class="btn btn--increase" @click="addMenuItemToOrders(item)">
-          +
+        <button class="btn btn--increase" @click="beginToAddNote(orderItem)">
+          Add Note
         </button>
+        <!-- use the modal component, pass in the prop -->
+        <PopupModal
+          :showModal="addingNote"
+          @close="addNote(orderItem)"
+          buttonText="Add Note"
+        >
+          <template #body>
+            <textarea class="orderNote" v-model="noteForOrderItem" />
+          </template>
+        </PopupModal>
         <button
           class="btn btn--decrease"
-          @click="removeMenuItemFromOrders(item)"
+          @click="removeOrderItemFromOrders(orderItem)"
         >
           -
         </button>
@@ -59,26 +68,28 @@
   </div>
 </template>
 <script>
+import PopupModal from "../genericComponents/PopupModal";
 import { MenuItemType } from "../../constants/MenuItemTypes";
 import MenuGroup from "../subComponents/MenuGroup";
 import { OrderRequest } from "../../models/OrderRequest";
+import { OrderItem } from "../../models/OrderItem";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const lodash = require("lodash");
 
 export default {
   name: "CreateOrder",
   components: {
-    MenuGroup
+    MenuGroup,
+    PopupModal
   },
   data() {
     return {
       orderRequest: undefined,
       menuItemTypes: MenuItemType,
-      orderChangeIsRequested: true
+      orderChangeIsRequested: true,
+      noteForOrderItem: null,
+      addingNote: false
     };
-  },
-  mounted(){
-    this.$refs.blaa.focus()
   },
   watch: {
     currentTableNumber(tableNumber) {
@@ -133,17 +144,15 @@ export default {
   methods: {
     add(total, itemToAdd) {
       return parseFloat(
-        parseFloat(total, 0) + parseFloat(itemToAdd.UnitPrice, 0)
+        parseFloat(total, 0) + parseFloat(itemToAdd.Order.UnitPrice, 0)
       );
     },
     addMenuItemToOrders(menuItem) {
-      this.orderRequest.Orders.push(menuItem);
+      this.orderRequest.Orders.push(new OrderItem({ menuItem }));
     },
-    removeMenuItemFromOrders(menuItem) {
-      const indexOfItem = this.orderRequest.Orders.indexOf(menuItem);
-      if (indexOfItem >= 0) {
-        this.orderRequest.Orders.splice(indexOfItem, 1);
-      }
+    removeOrderItemFromOrders(orderItem) {
+      const indexOfItem = this.orderRequest.Orders.indexOf(orderItem);
+      this.orderRequest.Orders.splice(indexOfItem, 1);
     },
     sendOrdersToKitchen() {
       this.$store.dispatch("setOrders", {
@@ -151,6 +160,15 @@ export default {
         tableNumber: this.currentTableNumber
       });
       this.orderChangeIsRequested = false;
+    },
+    addNote(orderItem) {
+      orderItem.Note = this.noteForOrderItem;
+      this.noteForOrderItem = null;
+      this.addingNote = false;
+    },
+    beginToAddNote(orderItem) {
+      this.addingNote = true;
+      this.noteForOrderItem = orderItem.Note;
     }
   }
 };
@@ -161,5 +179,39 @@ export default {
   top: 0;
   right: 25px;
   font-size: 36px;
+}
+.orderNote {
+  width: 250px;
+  height: 250px;
+}
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  margin: 0 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  &--decrease {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  &--increase {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+  }
 }
 </style>
