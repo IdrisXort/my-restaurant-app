@@ -15,7 +15,6 @@
         height: isCollapsed ? '250px' : '0px',
       }"
     >
-      <a href="" class="closebtn">×</a>
       <a href="#" @click="setOccupied">Serve table</a>
       <a style="cursor:pointer;" @click="getOrders">Orders</a>
     </div>
@@ -86,14 +85,6 @@ export default {
 .sidepanel a:hover {
   color: #f1f1f1;
 }
-
-.sidepanel .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-}
-
 .openbtn {
   font-size: 20px;
   cursor: pointer;

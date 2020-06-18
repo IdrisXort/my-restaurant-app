@@ -1,6 +1,14 @@
 <template>
-  <div v-if="currentTableNumber && orderChangeIsRequested">
+  <div
+    v-if="currentTableNumber && orderChangeIsRequested"
+    tabindex="0"
+    @keydown.esc="orderChangeIsRequested = false"
+    ref="blaa"
+  >
     <h2>Table {{ currentTableNumber }}</h2>
+    <button class="closebtn" @click="orderChangeIsRequested = false">
+      x
+    </button>
     <menu-group
       v-for="key in menuItemTypes"
       :key="key"
@@ -11,22 +19,39 @@
     />
     <template v-if="tableHasOrders">
       Earlier Orders
-      <div v-for="(item, index) in ordersForCurrentTable" :key="index">
+      <div
+        v-for="(item, index) in ordersForCurrentTable"
+        :key="item.Id + 'existing' + index"
+      >
         <span
           >{{ item.Name }}---------------------------------{{
             item.UnitPrice
           }}</span
         >
       </div>
+      <p v-if="tableHasNewOrders">
+        Total already ordered ------------------------------------------{{
+          totalCostOfExistingOrders
+        }}
+      </p>
     </template>
     <template v-if="tableHasNewOrders">
       New Orders
-      <div v-for="(item, index) in newOrders" :key="index">
+      <div v-for="item in newOrders" :key="item.Id + 'new' + index">
         <span
           >{{ item.Name }}---------------------------------{{
             item.UnitPrice
           }}</span
         >
+        <button class="btn btn--increase" @click="addMenuItemToOrders(item)">
+          +
+        </button>
+        <button
+          class="btn btn--decrease"
+          @click="removeMenuItemFromOrders(item)"
+        >
+          -
+        </button>
       </div>
     </template>
     <p>Total ------------------------------------------{{ totalCost }}</p>
@@ -52,6 +77,9 @@ export default {
       orderChangeIsRequested: true
     };
   },
+  mounted(){
+    this.$refs.blaa.focus()
+  },
   watch: {
     currentTableNumber(tableNumber) {
       this.orderRequest = new OrderRequest(tableNumber);
@@ -71,10 +99,18 @@ export default {
     currentTableNumber() {
       return this.$store.getters.currentTableNumber;
     },
-    totalCost() {
-      return this.orderRequest && this.orderRequest.Orders
+    totalCostOfNewOrders() {
+      return this.tableHasNewOrders
         ? this.orderRequest.Orders.reduce(this.add, 0)
         : 0;
+    },
+    totalCostOfExistingOrders() {
+      return this.tableHasOrders
+        ? this.ordersForCurrentTable.reduce(this.add, 0)
+        : 0;
+    },
+    totalCost() {
+      return this.totalCostOfExistingOrders + this.totalCostOfNewOrders;
     },
     tableNumber() {
       return this.$store.getters.currentTableNumber;
@@ -119,3 +155,11 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+.closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+}
+</style>

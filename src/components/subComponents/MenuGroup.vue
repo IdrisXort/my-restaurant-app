@@ -8,11 +8,14 @@
         :menuGroupItem="menuGroupItem"
         v-for="menuGroupItem in menuGroupItems"
         :key="menuGroupItem.Id"
-        :style="{ cursor: 'pointer' }"
       >
-        <template slot="add">
-          <button @click="increase(menuGroupItem)">+</button>
-          <button @click="decrease(menuGroupItem)">-</button>
+        <template #add>
+          <button class="btn btn--increase" @click="increase(menuGroupItem)">
+            +
+          </button>
+          <button class="btn btn--decrease" @click="decrease(menuGroupItem)">
+            -
+          </button>
         </template>
       </menu-group-item>
     </div>
@@ -24,26 +27,26 @@ import { OrderRequest } from "../../models//OrderRequest";
 export default {
   name: "MenuGroup",
   components: {
-    MenuGroupItem,
+    MenuGroupItem
   },
   data() {
     return {
       isToggled: false,
-      orderRequest: new OrderRequest(),
+      orderRequest: new OrderRequest()
     };
   },
   props: {
     groupTitle: {
-      type: String,
+      type: String
     },
     menuGroupItems: {
-      type: Array,
-    },
+      type: Array
+    }
   },
   computed: {
     className() {
       return this.isToggled ? "accordion active" : "accordion";
-    },
+    }
   },
   methods: {
     toggle() {
@@ -54,11 +57,11 @@ export default {
     },
     decrease(menuGroupItem) {
       this.$emit("removeMenuItem", menuGroupItem);
-    },
-  },
+    }
+  }
 };
 </script>
-<style>
+<style lang="scss">
 .accordion {
   background-color: #eee;
   color: #444;
@@ -83,5 +86,35 @@ export default {
   display: none;
   background-color: white;
   overflow: hidden;
+}
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  margin: 0 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  &--decrease {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  &--increase {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+  }
 }
 </style>

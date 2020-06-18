@@ -3,7 +3,7 @@
     <h2>
       {{ menuGroupItem.Name }} - <span>{{ menuGroupItem.UnitPrice }} Euro</span>
     </h2>
-    <slot name="add"/>
+    <slot name="add" />
     <p>{{ menuGroupItem.Description }}</p>
   </div>
 </template>
