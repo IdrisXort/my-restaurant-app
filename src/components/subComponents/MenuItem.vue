@@ -30,23 +30,3 @@ export default {
   }
 };
 </script>
-<style>
-.Soup {
-  background-color: orange;
-}
-.Starter {
-  background-color: blue;
-}
-.Salad {
-  background-color: green;
-}
-.MainCourse {
-  background-color: aqua;
-}
-.Dessert {
-  background-color: yellow;
-}
-.Extra {
-  background-color: greenyellow;
-}
-</style>

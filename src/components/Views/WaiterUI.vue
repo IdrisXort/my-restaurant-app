@@ -1,17 +1,8 @@
 <template>
-  <ul>
+  <div>
     <CreateOrder />
     <tables :tables="tables" />
-
-    GARSON
-    <li>masa hesabi ac</li>
-    <li>sparis ver</li>
-    <li>sparis iptal et</li>
-    <li>sparis degistir</li>
-    <li>yemek servis et</li>
-    <li>aynan</li>
-    <br />
-  </ul>
+  </div>
 </template>
 <script>
 import Tables from "../subComponents/Tables";
