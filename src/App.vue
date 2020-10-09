@@ -1,13 +1,43 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <admin-u-i v-if="isAdmin" />
+      <waiter-u-i v-if="true" />
+      <!-- <kitchen-u-i v-if="true" /> -->
     </div>
-    <router-view />
+    <div class="col-md-1"></div>
   </div>
 </template>
 
+<script>
+import AdminUI from "./components/Views/AdminUI";
+import WaiterUI from "./components/Views/WaiterUI";
+// import KitchenUI from "./components/Views/KitchenUI";
+import { foodsRef } from "./base";
+
+export default {
+  name: "App",
+  components: {
+    AdminUI,
+    WaiterUI,
+    // KitchenUI
+  },
+  computed: {
+    isAdmin() {
+      return false;
+    },
+  },
+  created() {
+    foodsRef.on("value", (snap) => {
+      this.$store.dispatch("setFoods", snap.val());
+    });
+    this.$store.dispatch("getTables");
+  },
+};
+</script>
+
+<style></style>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -29,4 +59,5 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+@import "~bootstrap/dist/css/bootstrap.css";
 </style>
