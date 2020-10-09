@@ -1,13 +1,18 @@
-import { MenuItem } from './MenuItem'
+import { MenuItem } from "./MenuItem";
+export class OrderItem extends MenuItem {
+  Note: string;
+  WaiterId: string;
+  OrderItemId: string;
 
-export class OrderItem {
-    Note:string | undefined
-    WaiterId:string
-    Order:MenuItem
-  
-    constructor({menuItem, note, waiterId = ''}:{menuItem: MenuItem, note:string, waiterId:string}) {
-        this.Order=menuItem
-        this.WaiterId=waiterId,
-        this.Note=note
-    }
+  constructor(
+    menuItem: MenuItem,
+    note = "",
+    waiterId = "",
+    orderItemId: string
+  ) {
+      super(menuItem);
+    this.WaiterId = waiterId;
+    this.Note = note;
+    this.OrderItemId = orderItemId;
   }
+}

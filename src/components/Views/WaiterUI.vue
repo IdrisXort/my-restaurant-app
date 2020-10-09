@@ -1,7 +1,7 @@
 <template>
   <div>
-    <CreateOrder />
     <tables :tables="tables" />
+    <CreateOrder />
   </div>
 </template>
 <script>
@@ -16,7 +16,7 @@ export default {
   computed: {
     tables() {
       return this.$store.getters.tables;
-    },
-  },
+    }
+  }
 };
 </script>

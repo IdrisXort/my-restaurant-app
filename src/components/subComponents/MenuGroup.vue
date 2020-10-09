@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <button :class="className" @click="toggle">
       <h1>{{ groupTitle }}</h1>
     </button>
@@ -10,8 +10,8 @@
         :key="menuGroupItem.Id"
       >
         <template #add>
-          <button class="btn btn--increase" @click="increase(menuGroupItem)">
-            +
+          <button type="button" class="btn btn-success" @click="increase(menuGroupItem)">
+            Add
           </button>
         </template>
       </menu-group-item>

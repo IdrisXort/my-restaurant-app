@@ -3,7 +3,6 @@ import VueRouter, { RouteConfig } from "vue-router";
 import Menu from "../components/subComponents/Menu.vue";
 import AddMenuItem from "../components/forms/AddMenuItem.vue";
 import UpdateMenuItem from "../components/forms/UpdateMenuItem.vue";
-import CreateOrder from "../components/forms/CreateOrder.vue";
 
 Vue.use(VueRouter);
 

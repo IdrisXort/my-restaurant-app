@@ -1,32 +1,39 @@
 <template>
-  <div id="app">
-    <admin-u-i v-if="isAdmin" />
-    <waiter-u-i />
+  <div id="app" class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <admin-u-i v-if="isAdmin" />
+      <waiter-u-i v-if="true" />
+      <!-- <kitchen-u-i v-if="true" /> -->
+    </div>
+    <div class="col-md-1"></div>
   </div>
 </template>
 
 <script>
 import AdminUI from "./components/Views/AdminUI";
 import WaiterUI from "./components/Views/WaiterUI";
+// import KitchenUI from "./components/Views/KitchenUI";
 import { foodsRef } from "./base";
 
 export default {
   name: "App",
   components: {
     AdminUI,
-    WaiterUI
+    WaiterUI,
+    // KitchenUI
   },
   computed: {
     isAdmin() {
       return false;
-    }
+    },
   },
   created() {
-    foodsRef.on("value", snap => {
+    foodsRef.on("value", (snap) => {
       this.$store.dispatch("setFoods", snap.val());
     });
     this.$store.dispatch("getTables");
-  }
+  },
 };
 </script>
 
@@ -52,4 +59,5 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+@import "~bootstrap/dist/css/bootstrap.css";
 </style>

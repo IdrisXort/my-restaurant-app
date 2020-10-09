@@ -1,5 +1,5 @@
 <template>
-  <div class="tableContainer">
+  <div class="row">
     <Table v-for="(table, index) in tables" :table="table" :key="index" />
   </div>
 </template>
@@ -17,10 +17,3 @@ export default {
   }
 };
 </script>
-<style>
-.tableContainer {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-</style>

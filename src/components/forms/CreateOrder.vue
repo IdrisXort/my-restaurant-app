@@ -1,78 +1,57 @@
 <template>
   <div v-if="currentTableNumber && orderChangeIsRequested">
-    <h2>Table {{ currentTableNumber }}</h2>
-    <button class="closebtn" @click="orderChangeIsRequested = false">
-      x
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Close"
+      @click="orderChangeIsRequested = false"
+    >
+      <span aria-hidden="true">X</span>
     </button>
-    <menu-group
-      v-for="key in menuItemTypes"
-      :key="key"
-      @addMenuItem="addMenuItemToOrders"
-      :menuGroupItems="grouppedFoods[key]"
-      :groupTitle="key"
-    />
-    <template v-if="tableHasOrders">
-      Earlier Orders
-      <div
-        v-for="(orderItem, index) in ordersForCurrentTable"
-        :key="orderItem.Order.Id + 'existing' + index"
-      >
-        <span>
-          <span v-if="orderItem.Note">***</span>
-          {{ orderItem.Order.Name }}---------------------------------{{
-            orderItem.Order.UnitPrice
-          }}</span
-        >
+
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Table {{ currentTableNumber }}</h2>
+        <menu-group
+          v-for="key in menuItemTypes"
+          :key="key"
+          @addMenuItem="addMenuItemToOrders"
+          :menuGroupItems="grouppedFoods[key]"
+          :groupTitle="key"
+        />
       </div>
-      <p v-if="tableHasNewOrders">
-        Total already ordered ------------------------------------------{{
-          totalCostOfExistingOrders
-        }}
-      </p>
-    </template>
-    <template v-if="tableHasNewOrders">
-      New Orders
-      <div
-        v-for="(orderItem, index) in newOrders"
-        :key="orderItem.Order.Id + 'new' + index"
-      >
-        <span>
-          <span v-if="orderItem.Note">***</span>
-          {{ orderItem.Order.Name }}---------------------------------{{
-            orderItem.Order.UnitPrice
-          }}</span
-        >
-        <button class="btn btn--increase" @click="beginToAddNote(orderItem)">
-          Add Note
-        </button>
-        <!-- use the modal component, pass in the prop -->
-        <PopupModal
-          :showModal="addingNote"
-          @close="addNote(orderItem)"
-          buttonText="Add Note"
-        >
-          <template #body>
-            <textarea class="orderNote" v-model="noteForOrderItem" />
-          </template>
-        </PopupModal>
+
+      <div class="col-md-4">
+        <Receipt
+          title="exsisting orders"
+          v-if="tableHasOrders"
+          :receiptItems="ordersForCurrentTable"
+        />
+        <Receipt
+          title="new orders"
+          v-if="tableHasNewOrders"
+          :receiptItems="newOrders"
+        />
         <button
-          class="btn btn--decrease"
-          @click="removeOrderItemFromOrders(orderItem)"
+          type="button"
+          v-if="tableHasOrders || tableHasNewOrders"
+          @click="sendOrdersToKitchen"
         >
-          -
+          Send Order
         </button>
       </div>
-    </template>
-    <p>Total ------------------------------------------{{ totalCost }}</p>
-    <button @click="sendOrdersToKitchen">Send Order</button>
+    </div>
   </div>
 </template>
 <script>
-import PopupModal from "../genericComponents/PopupModal";
+// import { PopupModal } from "../genericComponents";
 import { MenuItemType } from "../../constants/MenuItemTypes";
 import MenuGroup from "../subComponents/MenuGroup";
+import Receipt from "../subComponents/Receipt";
 import { OrderRequest } from "../../models/OrderRequest";
 import { OrderItem } from "../../models/OrderItem";
+import Guid from "guid";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const lodash = require("lodash");
 
@@ -80,7 +59,8 @@ export default {
   name: "CreateOrder",
   components: {
     MenuGroup,
-    PopupModal
+    // PopupModal,
+    Receipt,
   },
   data() {
     return {
@@ -88,14 +68,14 @@ export default {
       menuItemTypes: MenuItemType,
       orderChangeIsRequested: true,
       noteForOrderItem: null,
-      addingNote: false
+      currentItem: {},
     };
   },
   watch: {
     currentTableNumber(tableNumber) {
       this.orderRequest = new OrderRequest(tableNumber);
       this.orderChangeIsRequested = true;
-    }
+    },
   },
   computed: {
     grouppedFoods() {
@@ -127,7 +107,9 @@ export default {
       return this.$store.getters.currentTableNumber;
     },
     ordersForCurrentTable() {
-      return this.$store.getters.getOrderByTableNumber(this.tableNumber) || [];
+      return this.$store.getters.getOrderByTableNumber(this.tableNumber)
+        ? this.$store.getters.getOrderByTableNumber(this.tableNumber).Orders
+        : [];
     },
     newOrders() {
       return this.orderRequest.Orders || [];
@@ -139,47 +121,26 @@ export default {
     },
     foods() {
       return Object.values(this.$store.getters.foods);
-    }
+    },
   },
   methods: {
-    add(total, itemToAdd) {
-      return parseFloat(
-        parseFloat(total, 0) + parseFloat(itemToAdd.Order.UnitPrice, 0)
+    addMenuItemToOrders(menuItem) {
+      console.log(menuItem);
+      this.orderRequest.Orders.push(
+        new OrderItem(menuItem, "", "", Guid.raw())
       );
     },
-    addMenuItemToOrders(menuItem) {
-      this.orderRequest.Orders.push(new OrderItem({ menuItem }));
-    },
-    removeOrderItemFromOrders(orderItem) {
-      const indexOfItem = this.orderRequest.Orders.indexOf(orderItem);
-      this.orderRequest.Orders.splice(indexOfItem, 1);
-    },
+
     sendOrdersToKitchen() {
-      this.$store.dispatch("setOrders", {
-        orders: this.allOrders,
-        tableNumber: this.currentTableNumber
-      });
+      const request = new OrderRequest(this.currentTableNumber);
+      request.Orders = this.allOrders;
+      this.$store.dispatch("setOrders", request);
       this.orderChangeIsRequested = false;
     },
-    addNote(orderItem) {
-      orderItem.Note = this.noteForOrderItem;
-      this.noteForOrderItem = null;
-      this.addingNote = false;
-    },
-    beginToAddNote(orderItem) {
-      this.addingNote = true;
-      this.noteForOrderItem = orderItem.Note;
-    }
-  }
+  },
 };
 </script>
 <style lang="scss">
-.closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-}
 .orderNote {
   width: 250px;
   height: 250px;

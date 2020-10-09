@@ -12,9 +12,9 @@ export default {
   name: "MenuGroupItem",
   props: {
     menuGroupItem: {
-      type: Object,
+      type: Object
     }
-  },
+  }
 };
 </script>
 <style>

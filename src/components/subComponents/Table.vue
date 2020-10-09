@@ -1,22 +1,43 @@
 <template>
-  <div class="table">
-    <button
-      class="openbtn"
-      :style="{
-        backgroundColor: isTableOccupied ? 'aqua' : '#111',
-      }"
-      @click="openNav"
-    >
-      ☰ Table {{ table.Number }}
-    </button>
-    <div
-      class="sidepanel"
-      :style="{
-        height: isCollapsed ? '250px' : '0px',
-      }"
-    >
-      <a href="#" @click="setOccupied">Serve table</a>
-      <a style="cursor:pointer;" @click="getOrders">Orders</a>
+  <div class="col-md-3">
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button
+              class="btn btn-link btn-block text-left"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+              @click="openNav"
+            >
+              ☰ Table {{ table.Number }}
+            </button>
+          </h2>
+        </div>
+
+        <div
+          id="collapseOne"
+          :class="isCollapsed ? 'collapse show' : 'collapse'"
+          aria-labelledby="headingOne"
+          data-parent="#accordionExample"
+        >
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <a class="row" href="#" @click="setOccupied">Serve table</a>
+              </li>
+              <li class="list-group-item">
+                <a class="row" style="cursor:pointer;" @click="getOrders"
+                  >Orders</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
