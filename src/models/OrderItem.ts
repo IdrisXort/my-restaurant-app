@@ -1,10 +1,12 @@
 import { MenuItem } from "./MenuItem";
+import {OrderStatus} from '../constants/OrderStatus';
 export class OrderItem extends MenuItem {
   Note: string;
   WaiterId: string;
   OrderItemId: string;
   CreationTime:string;
   EditTime:string;
+  OrderStatus:string;
 
   constructor(
     menuItem: MenuItem,
@@ -18,6 +20,7 @@ export class OrderItem extends MenuItem {
     this.OrderItemId = orderItemId;
     this.CreationTime = new Date().toLocaleTimeString()
     this.EditTime = ""
+    this.OrderStatus = OrderStatus.Inbox
   }
   setEditTime(){
    this.EditTime = new Date().toLocaleTimeString()
