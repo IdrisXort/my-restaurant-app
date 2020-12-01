@@ -7,6 +7,7 @@
       v-for="receiptItem in receiptItems"
       :receiptItem="receiptItem"
       :key="receiptItem.OrderItemId"
+      @removeOrder="removeOrder"
     />
     total -------
     {{
@@ -46,6 +47,10 @@ export default {
       return parseFloat(
         parseFloat(total, 0) + parseFloat(itemToAdd.UnitPrice, 0)
       );
+    },
+    removeOrder(orderItem) {
+      const indexOfItem = this.receiptItems.indexOf(orderItem);
+      this.receiptItems.splice(indexOfItem, 1);
     },
   },
 };

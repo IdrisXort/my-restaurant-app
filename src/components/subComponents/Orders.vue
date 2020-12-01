@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <Order
-      v-for="(orderItem, index) in orderItems"
-      :tableNumber="orderItem.TableNumber"
-      :key="index"
-      :orderItems="orderItem.Orders"
+  <div class="col">
+    <order
+      :order="order"
+      :table-number="order.TableNumber"
+      :key="order.TableNumber"
+      v-for="order in orders"
     />
   </div>
 </template>
@@ -14,21 +14,24 @@ import Order from "./Order";
 export default {
   name: "Orders",
   components: {
-    Order
+    Order,
   },
-  data() {
-    return {
-      orderItems: []
-    };
+  props: {
+    orders: {
+      type: Array,
+      default: () => [],
+    },
   },
-  props: { orders: { type: Object, default: () => ({}) } },
-  watch: {
-    orders(newVal) {
-      console.info("orders changedddd", newVal);
-      this.orderItems = Object.values(newVal);
-    }
-  }
+  computed: {
+    inboxOrders() {
+      return [];
+    },
+    inProgressOrders() {
+      return [];
+    },
+    doneOrders() {
+      return [];
+    },
+  },
 };
 </script>
-
-<style lang="scss"></style>

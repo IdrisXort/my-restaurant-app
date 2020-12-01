@@ -7,7 +7,7 @@
           type="radio"
           :key="index"
           :value="foodType"
-          v-model="menuItem.type"
+          v-model="menuItem.Type"
         />
         {{ foodType }}
       </template>
@@ -21,28 +21,28 @@
           type="radio"
           :key="index"
           :value="mainCourseType"
-          v-model="menuItem.subType"
+          v-model="menuItem.SubType"
         />
         {{ mainCourseType }}
       </template>
     </InputContainer>
     <InputContainer label="The name of MenuItem">
-      <input type="text" v-model="menuItem.name" />
+      <input type="text" v-model="menuItem.Name" />
     </InputContainer>
     <InputContainer label="The price of MenuItem">
-      <input type="number" v-model="menuItem.unitPrice" />
+      <input type="number" v-model="menuItem.UnitPrice" />
     </InputContainer>
     <InputContainer label="Is MenuItem available">
-      <input type="checkbox" v-model="menuItem.isAvailable" />
+      <input type="checkbox" v-model="menuItem.IsAvailable" />
     </InputContainer>
     <InputContainer label="MenuItem Description">
-      <textarea v-model="menuItem.description" />
+      <textarea v-model="menuItem.Description" />
     </InputContainer>
     <InputContainer
       v-if="isSelectedFoodMainCourse"
       label="The approximitely cooking time of MenuItem"
     >
-      <input type="number" v-model="menuItem.approximitelyCookingTime" />
+      <input type="number" v-model="menuItem.ApproximitelyCookingTime" />
     </InputContainer>
     <button :disabled="!isButtonActive" @click="addUpdateItem">Add Item</button>
   </div>
@@ -66,14 +66,14 @@ export default {
   data() {
     return {
       menuItem: {
-        id: null,
-        name: "",
-        unitPrice: null,
-        isAvailable: true,
-        description: "",
-        type: "",
-        approximitelyCookingTime: undefined,
-        subType: undefined
+        Id: null,
+        Name: "",
+        UnitPrice: null,
+        IsAvailable: true,
+        Description: "",
+        Yype: "",
+        ApproximitelyCookingTime: undefined,
+        SubType: undefined
       },
       FoodTypes,
       MainCourseTypes
@@ -84,21 +84,21 @@ export default {
   },
   computed: {
     isSelectedFoodMainCourse() {
-      return this.menuItem.type === MenuItemType.MainCourse;
+      return this.menuItem.Type === MenuItemType.MainCourse;
     },
     isButtonActive() {
       return (
-        this.menuItem.name &&
-        this.menuItem.unitPrice &&
-        this.menuItem.description &&
-        this.menuItem.type
+        this.menuItem.Name &&
+        this.menuItem.UnitPrice &&
+        this.menuItem.Description &&
+        this.menuItem.Type
       );
     }
   },
   watch: {
     isSelectedFoodMainCourse(newVal) {
       if (!newVal) {
-        this.menuItem.approximitelyCookingTime = undefined;
+        this.menuItem.ApproximitelyCookingTime = undefined;
       }
     }
   },
@@ -109,13 +109,14 @@ export default {
     },
     reset() {
       this.menuItem = {
-        name: "",
-        unitPrice: null,
-        isAvailable: true,
-        description: "",
-        type: "",
-        approximitelyCookingTime: undefined,
-        id: Guid.raw()
+        Id: Guid.raw(),
+        Name: "",
+        UnitPrice: null,
+        IsAvailable: true,
+        Description: "",
+        Yype: "",
+        ApproximitelyCookingTime: undefined,
+        SubType: undefined
       };
     }
   }
