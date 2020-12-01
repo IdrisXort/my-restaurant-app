@@ -40,8 +40,6 @@ export default {
     return {
       addingNote: false,
       noteForOrderItem: null,
-      currentItem: {},
-      goster: false,
     };
   },
   props: {
@@ -52,12 +50,12 @@ export default {
   },
   methods: {
     addNote() {
+      this.receiptItem.setEditTime()
       this.addingNote = false;
-      this.currentItem = {};
     },
     removeOrderItemFromOrders(orderItem) {
-      const indexOfItem = this.orderRequest.Orders.indexOf(orderItem);
-      this.orderRequest.Orders.splice(indexOfItem, 1);
+      this.$emit('removeOrder',orderItem)
+
     },
   },
 };

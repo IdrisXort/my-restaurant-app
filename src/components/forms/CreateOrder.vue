@@ -125,7 +125,6 @@ export default {
   },
   methods: {
     addMenuItemToOrders(menuItem) {
-      console.log(menuItem);
       this.orderRequest.Orders.push(
         new OrderItem(menuItem, "", "", Guid.raw())
       );

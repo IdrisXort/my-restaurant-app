@@ -2,26 +2,29 @@
   <div id="app" class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-      <admin-u-i v-if="isAdmin" />
-      <waiter-u-i v-if="true" />
-      <!-- <kitchen-u-i v-if="true" /> -->
+      <!-- <p>Admin UserInterface</p>
+      <admin-u-i /> -->
+      <p>Waiter/Guest UserInterface</p>
+      <waiter-u-i />
+      <p>Kitchen UserInterface</p>
+      <kitchen-u-i />
     </div>
     <div class="col-md-1"></div>
   </div>
 </template>
 
 <script>
-import AdminUI from "./components/Views/AdminUI";
+// import AdminUI from "./components/Views/AdminUI";
 import WaiterUI from "./components/Views/WaiterUI";
-// import KitchenUI from "./components/Views/KitchenUI";
+import KitchenUI from "./components/Views/KitchenUI";
 import { foodsRef } from "./base";
 
 export default {
   name: "App",
   components: {
-    AdminUI,
+    // AdminUI,
     WaiterUI,
-    // KitchenUI
+    KitchenUI
   },
   computed: {
     isAdmin() {
