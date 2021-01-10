@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 alert alert-danger" role="alert">
+      <div class="col-md-3 alert alert-danger" role="alert">
         Inbox
         <ul
           :key="order.OrderItemId"
@@ -24,7 +24,7 @@
         </ul>
       </div>
 
-      <div class="col-md-4  alert alert-warning" role="alert">
+      <div class="col-md-3  alert alert-warning" role="alert">
         In Progress
         <ul
           :key="order.OrderItemId"
@@ -44,7 +44,7 @@
           </li>
         </ul>
       </div>
-      <div class="col-md-4  alert alert-success" role="alert">
+      <div class="col-md-3  alert alert-success" role="alert">
         Done
         <ul
           :key="order.OrderItemId"
@@ -58,6 +58,48 @@
             </button>
             {{ order.Name }}
             <span v-if="order.Note">*******{{ order.Note }}</span>
+            <button :key="order.OrderItemId" @click="setDelievered(order)">
+              setDelievered
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-3  alert alert-secondary" role="alert">
+        Delievered
+        <ul
+          :key="order.OrderItemId"
+          class="list-group"
+          v-for="order in delieveredOrders"
+        >
+          <br />
+          <li class="list-group-item">
+            <button
+              :key="order.OrderItemId"
+              @click="cancellationActivated = true"
+            >
+              setCancelled
+            </button>
+            <PopupModal
+              :showModal="cancellationActivated"
+              @close="setCancelled(order)"
+              buttonText="Add Cancellation Note"
+            >
+              <template #body>
+                <select v-model="order.CancellationReason">
+                  <option v-for="option in cancellationReasons" :key="option">{{
+                    option
+                  }}</option>
+                </select>
+                {{ order.Name }}
+                <textarea
+                  :key="order.orderItemId"
+                  class="orderNote"
+                  v-model="order.CancellationReason"
+                />
+              </template>
+            </PopupModal>
+            {{ order.Name }}
+            <span v-if="order.Note">*******{{ order.Note }}</span>
           </li>
         </ul>
       </div>
@@ -65,9 +107,20 @@
   </div>
 </template>
 <script>
+import { PopupModal } from "../genericComponents";
+
 import { OrderStatus } from "../../constants/OrderStatus";
+import { FoodCancellationReasons } from "../../constants/cancellationReasons";
 export default {
   name: "Order",
+  components: {
+    PopupModal,
+  },
+  data() {
+    return {
+      cancellationActivated: false,
+    };
+  },
   props: {
     order: {
       type: Object,
@@ -85,6 +138,13 @@ export default {
     },
     setDone(order) {
       this.$store.dispatch("setDone", order);
+    },
+    setDelievered(order) {
+      this.$store.dispatch("setDelievered", order);
+    },
+    setCancelled(order) {
+      this.$store.dispatch("setCancelled", order);
+      this.cancellationActivated = false;
     },
   },
   computed: {
@@ -108,6 +168,23 @@ export default {
           (order) => order.OrderStatus === OrderStatus.Done
         ) || []
       );
+    },
+    delieveredOrders() {
+      return (
+        this.order.Orders.filter(
+          (order) => order.OrderStatus === OrderStatus.Delievered
+        ) || []
+      );
+    },
+    cancelledOrders() {
+      return (
+        this.order.Orders.filter(
+          (order) => order.OrderStatus === OrderStatus.Cancelled
+        ) || []
+      );
+    },
+    cancellationReasons() {
+      return FoodCancellationReasons;
     },
   },
 };

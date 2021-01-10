@@ -12,6 +12,7 @@ export class AdminService {
     foodsRef.child(menuItem.Id).set(menuItem);
   }
   static moveItemToTheBin(menuItem: MenuItem) {
+    menuItem.IsActive = false
     inActiveItemsRef.child(menuItem.Id).set(menuItem);
     foodsRef.child(menuItem.Id).remove();
   }
