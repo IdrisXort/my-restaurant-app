@@ -7,12 +7,15 @@ export class OrderItem extends MenuItem {
   CreationTime:string;
   EditTime:string;
   OrderStatus:string;
+  CancellationReason:string | undefined;
+  TableNumber:number
 
   constructor(
     menuItem: MenuItem,
     note = "",
     waiterId = "",
-    orderItemId: string
+    orderItemId: string,
+    tableNumber:number
   ) {
       super(menuItem);
     this.WaiterId = waiterId;
@@ -21,6 +24,8 @@ export class OrderItem extends MenuItem {
     this.CreationTime = new Date().toLocaleTimeString()
     this.EditTime = ""
     this.OrderStatus = OrderStatus.Inbox
+    this.CancellationReason = undefined
+    this.TableNumber = tableNumber
   }
   setEditTime(){
    this.EditTime = new Date().toLocaleTimeString()

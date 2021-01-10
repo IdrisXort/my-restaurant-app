@@ -126,7 +126,7 @@ export default {
   methods: {
     addMenuItemToOrders(menuItem) {
       this.orderRequest.Orders.push(
-        new OrderItem(menuItem, "", "", Guid.raw())
+        new OrderItem(menuItem, "", "", Guid.raw(), this.tableNumber)
       );
     },
 

@@ -1,7 +1,7 @@
 import { MenuItem } from '../MenuItem';
 
 export class MenuItemInputModel {
-  Id: string | undefined;
+  Id: string ;
   Name: string | undefined;
   UnitPrice: number | undefined;
   IsAvailable: boolean | undefined;
@@ -21,7 +21,7 @@ export class MenuItemInputModel {
     ApproximitelyCookingTime,
     SubType
   }: {
-    Id: string | undefined;
+    Id: string ;
     Name: string | undefined;
     UnitPrice: number | undefined;
     IsAvailable: boolean | undefined;

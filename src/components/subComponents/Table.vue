@@ -14,6 +14,7 @@
               @click="openNav"
             >
               ☰ Table {{ table.Number }}
+              <span v-if="tableHasDoneOrders">****</span>
             </button>
           </h2>
         </div>
@@ -43,6 +44,7 @@
 </template>
 <script>
 import { Table } from "../../models/Table";
+import { OrderStatus } from "../../constants/OrderStatus";
 export default {
   name: "Table",
   data() {
@@ -61,6 +63,18 @@ export default {
     },
     isTableOccupied() {
       return this.table.IsOccupied;
+    },
+    tableHasDoneOrders() {
+      return (
+        this.ordersForTable &&
+        this.ordersForTable.some((a) => a.OrderStatus === OrderStatus.Done)
+      );
+    },
+    ordersForTable() {
+      const order = this.$store.getters.getOrderByTableNumber(
+        this.table.Number
+      );
+      return order ? order.Orders : [];
     },
   },
   methods: {
